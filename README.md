@@ -1,5 +1,16 @@
 # NYC Bike Rides Pipeline 
 
+## Table of Contents
+- [Overview](#overview)
+- [Problem Statement](#problem-statement)
+- [Technologies Used](#technologies-used)
+- [Architecture](#architecture)
+- [Dashboard](#dashboard)
+- [Setup and Installation](#setup-and-installation)
+- [Challenges and Learnings](#challenges-and-learnings)
+- [Future Improvements](#future-improvements)
+- [Acknowledgments](#acknowledgments)
+
 ## Overview
 
 This project, developed as the final submission for the **DE Zoomcamp 2025 cohort**, builds an end-to-end batch data pipeline to process and analyze NYC Citi Bike trip data for 2024. The pipeline ingests raw trip data, stores it in a data lake(gcs), transforms it in a data warehouse, and visualizes key insights through a dashboard. The goal is to uncover trends in bike usage, rider behavior, and station activity to support urban mobility planning and optimize Citi Bike operations.
@@ -33,7 +44,7 @@ The pipeline follows a batch processing workflow, orchestrated end-to-end using 
 
 1. **Data Ingestion:** Citi Bike 2024 trip data (CSV format) is downloaded from a [public S3 bucket](https://s3.amazonaws.com/tripdata/index.html) and uploaded to a Google Cloud Storage (GCS) bucket, named `naza_nyc_bike_rides`, which serves as the data lake.
 2. **Orchestration:** Apache Airflow, containerized with Docker, orchestrates the monthly ingestion and processing pipeline.
-3. **Data Warehouse:** Raw data was is loaded from GCS into Google BigQuery’s staging dataset (`nyc_bikes_staging`), with partitioning (by `started_at`) and clustering (by `start_station_id`) for optimization. After transformation, the data is loaded into the production dataset (`nyc_bikes_prod`).
+3. **Data Warehouse:** Raw data is loaded from GCS into Google BigQuery’s staging dataset (`nyc_bikes_staging`), with partitioning (by `started_at`) and clustering (by `start_station_id`) for optimization. After transformation, the data is loaded into the production dataset (`nyc_bikes_prod`).
 4. **Transformations:** dbt Cloud is used to transform the raw data from the staging dataset into a production-ready dataset in BigQuery (`nyc_bikes_prod`), applying cleaning, aggregation, and modeling.
 5. **Visualization:** Final datasets are visualized using Looker Studio, providing interactive dashboards to explore bike trip trends and insights such as total rides, rideable type breakdown, and top start stations.
 6. **Infrastructure as Code (IaC):** The GCS bucket (`naza_nyc_bike_rides`) and BigQuery datasets (`nyc_bikes_staging` and `nyc_bikes_prod`) are provisioned using Terraform to ensure reproducibility and scalability. Use Terraform to provision the GCS  and  as Infrastructure as Code (IaC).
