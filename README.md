@@ -31,7 +31,7 @@ This project, developed as the final submission for the **DE Zoomcamp 2025 cohor
 
 The pipeline follows a batch processing workflow, orchestrated end-to-end using Apache Airflow and built entirely on Google Cloud Platform with Infrastructure as Code:
 
-1. **Data Ingestion:** Citi Bike 2024 trip data (CSV format) is downloaded from a [[public S3 bucket](`https://s3.amazonaws.com/tripdata/index.html`)] and uploaded to a Google Cloud Storage (GCS) bucket, named `naza_nyc_bike_rides`, which serves as the data lake.
+1. **Data Ingestion:** Citi Bike 2024 trip data (CSV format) is downloaded from a [public S3 bucket](https://s3.amazonaws.com/tripdata/index.html) and uploaded to a Google Cloud Storage (GCS) bucket, named `naza_nyc_bike_rides`, which serves as the data lake.
 2. **Orchestration:** Apache Airflow, containerized with Docker, orchestrates the monthly ingestion and processing pipeline.
 3. **Data Warehouse:** Raw data was is loaded from GCS into Google BigQuery’s staging dataset (`nyc_bikes_staging`), with partitioning (by `started_at`) and clustering (by `start_station_id`) for optimization. After transformation, the data is loaded into the production dataset (`nyc_bikes_prod`).
 4. **Transformations:** dbt Cloud is used to transform the raw data from the staging dataset into a production-ready dataset in BigQuery (`nyc_bikes_prod`), applying cleaning, aggregation, and modeling.
@@ -56,7 +56,7 @@ The dashboard, titled **NYC Bike Usage Insights (2024)**, visualizes key metrics
 - **Rides by User Type:** A donut chart showing 75.8% member rides vs. 24.2% casual rides.
 - **Top 5 Start Stations:** A bar chart listing the most popular stations (e.g., Hoboken Terminal - River St & Hudson Pl).
 
-The dashboard is accessible via [[Looker Studio link](https://lookerstudio.google.com/s/m_RrMM_TF20)].
+The dashboard is accessible via [Looker Studio link](https://lookerstudio.google.com/s/m_RrMM_TF20).
 
 **Note: Records with null values in `started_at`, `rideable_type`, `ended_at`, or `start_station_name` have been excluded from the dataset.**
 
@@ -155,4 +155,4 @@ docker-compose up -d
 ### Acknowledgments
 Thanks to Alexey for providing this opprotunity and the DE Zoomcamp 2025 instructors and community for their guidance. Big shout out to Citi Bike for providing open trip data.
 
-Feel free to reach out on [[LinkedIn](https://www.linkedin.com/in/blessingangus/)] or shoot me an email at blangus.c@gmail.com for questions or collaboration!
+Feel free to reach out on [LinkedIn](https://www.linkedin.com/in/blessingangus/) or shoot me an email at blangus.c@gmail.com for questions or collaboration!
