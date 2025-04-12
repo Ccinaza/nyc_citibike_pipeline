@@ -9,6 +9,6 @@ env/
 *.tfstate
 *.tfstate.backup
 .terraform/
-.terraform/
+terraform/.terraform/
 
 
