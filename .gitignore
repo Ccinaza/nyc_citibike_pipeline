@@ -8,3 +8,5 @@ env/
 *.hcl
 *.tfstate
 *.tfstate.backup
+.terraform/
+.terraform/
