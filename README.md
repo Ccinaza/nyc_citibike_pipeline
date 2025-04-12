@@ -148,7 +148,7 @@ docker-compose up -d
 - Recreate the dashboard as shown above, or use the provided [Looker Studio link](https://lookerstudio.google.com/s/m9Oe3kIFNYQ).
 
 8. **Clean Up Resources**
-To avoid incurring unnecessary GCP costs, destroy all remote resources when they are no longer needed by running:
+- To avoid incurring unnecessary GCP costs, destroy all remote resources when they are no longer needed by running:
 ```bash
 terraform destroy
 ```
