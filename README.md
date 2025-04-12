@@ -131,6 +131,11 @@ docker-compose up -d
 
 5. **Run the Airflow DAG**
 - The DAG (etl.py) is in the dags/ folder.
+- The DAG includes a test script (`test_etl.py`) to validate the ETL process. Run the tests with:
+  ```bash
+  python dags/test_etl.py
+  ```
+- Access the Airflow UI at `http://localhost:8080` (default port) and log in with the credentials specified in your `.env` file (e.g., username: `admin`, password: `admin`).
 - Trigger the DAG in the Airflow UI to download, upload, and load the 2024 Citi Bike data into BigQuery.
 
 6. **Transform Data with dbt Cloud**
@@ -140,7 +145,13 @@ docker-compose up -d
 
 7. **Visualize in Looker Studio**
 - Connect Looker Studio to the nyc_bikes_prod dataset in BigQuery.
-- Recreate the dashboard as shown above, or use the provided [[Looker Studio link](https://lookerstudio.google.com/s/m9Oe3kIFNYQ)].
+- Recreate the dashboard as shown above, or use the provided [Looker Studio link](https://lookerstudio.google.com/s/m9Oe3kIFNYQ).
+
+8. **Clean Up Resources**
+To avoid incurring unnecessary GCP costs, destroy all remote resources when they are no longer needed by running:
+```bash
+terraform destroy
+```
 
 ### Challenges and Learnings
 - Challenge: Initially attempted to use Google Cloud Composer for Airflow but faced setup issues, so switched to a local Airflow instance via Docker.
@@ -153,6 +164,6 @@ docker-compose up -d
 
 
 ### Acknowledgments
-Thanks to Alexey for providing this opprotunity and the DE Zoomcamp 2025 instructors and community for their guidance. Big shout out to Citi Bike for providing open trip data.
+A huge thanks to Alexey Grigorev and the [DataTalksClub](https://github.com/DataTalksClub) team for providing this incredible opportunity through DE Zoomcamp 2025. I’m also grateful to the instructors and community for their guidance, and to Citi Bike for providing open trip data.
 
 Feel free to reach out on [LinkedIn](https://www.linkedin.com/in/blessingangus/) or shoot me an email at blangus.c@gmail.com for questions or collaboration!
