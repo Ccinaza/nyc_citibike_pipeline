@@ -17,6 +17,16 @@ This project, developed as the final submission for the **DE Zoomcamp 2025 cohor
 - Which stations are the most popular starting points for rides, and what does this suggest about urban mobility in NYC?
 - What is the average trip duration, and how can this inform bike maintenance or rebalancing strategies?
 
+### Technologies Used
+- **Cloud:** Google Cloud Platform (GCP) for storage and data warehousing.
+- **Infrastructure as Code (IaC):** Terraform to provision GCS buckets and BigQuery datasets.
+- **Workflow Orchestration:** Apache Airflow (via Docker) for batch processing.
+- **Data Lake:** Google Cloud Storage (GCS).
+- **Data Warehouse:** Google BigQuery, with partitioned and clustered tables.
+- **Transformations:** dbt Cloud for data modeling and transformations.
+- **Visualization:** Looker Studio for the dashboard.
+
+
 ## Architecture
 
 The pipeline follows a batch processing workflow, orchestrated end-to-end using Apache Airflow and built entirely on Google Cloud Platform with Infrastructure as Code:
@@ -33,15 +43,6 @@ The pipeline follows a batch processing workflow, orchestrated end-to-end using 
 ![NYC Citi Bike 2024 Data Pipeline Architecture](image-1.png)
 
 *Note:* The diagram illustrates the end-to-end flow, with Airflow orchestrating the pipeline, Terraform provisioning the infrastructure, and dbt Cloud handling transformations.
-
-### Technologies Used
-- **Cloud:** Google Cloud Platform (GCP) for storage and data warehousing.
-- **Infrastructure as Code (IaC):** Terraform to provision GCS buckets and BigQuery datasets.
-- **Workflow Orchestration:** Apache Airflow (via Docker) for batch processing.
-- **Data Lake:** Google Cloud Storage (GCS).
-- **Data Warehouse:** Google BigQuery, with partitioned and clustered tables.
-- **Transformations:** dbt Cloud for data modeling and transformations.
-- **Visualization:** Looker Studio for the dashboard.
 
 ## Dashboard
 
