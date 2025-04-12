@@ -1,0 +1,10 @@
+.env
+*.csv
+*.json
+*.ipynb
+clean_trips
+bikes/
+env/
+*.hcl
+*.tfstate
+*.tfstate.backup

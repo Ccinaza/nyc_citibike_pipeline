@@ -1,0 +1,86 @@
+services:
+
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - airflow_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DB_USER}"]
+      interval: 5s
+      retries: 2
+
+  airflow-init:
+    image: apache/airflow:2.6.0-python3.9
+    env_file: .env
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
+      - AIRFLOW__CORE__LOAD_EXAMPLES=false
+      - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/gcp_creds.json
+      - GCP_PROJECT_ID=${GCP_PROJECT_ID}
+      - GCP_BUCKET_NAME=${GCP_BUCKET_NAME}
+      - BIGQUERY_DATASET=${BIGQUERY_DATASET}
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./gcp_creds.json:/opt/airflow/gcp_creds.json
+    command: >
+      bash -c "airflow db init &&
+      airflow users create
+      --username ${AIRFLOW_USERNAME}
+      --password ${AIRFLOW_PASSWORD}
+      --firstname airflow
+      --lastname airflow
+      --role Admin
+      --email ${AIRFLOW_EMAIL}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  webserver:
+    image: apache/airflow:2.6.0-python3.9
+    env_file: .env
+    command: airflow webserver
+    ports:
+      - "8080:8080"
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
+      - AIRFLOW__CORE__LOAD_EXAMPLES=false
+      - AIRFLOW__WEBSERVER__SECRET_KEY=${AIRFLOW__WEBSERVER__SECRET_KEY}
+      - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/gcp_creds.json 
+      - GCP_PROJECT_ID=${GCP_PROJECT_ID}
+      - GCP_BUCKET_NAME=${GCP_BUCKET_NAME}
+      - BIGQUERY_DATASET=${BIGQUERY_DATASET}
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./gcp_creds.json:/opt/airflow/gcp_creds.json
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+
+  scheduler:
+    image: apache/airflow:2.6.0-python3.9
+    env_file: .env
+    command: airflow scheduler
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
+      - AIRFLOW__CORE__LOAD_EXAMPLES=false
+      - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/gcp_creds.json
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./gcp_creds.json:/opt/airflow/gcp_creds.json
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+
+volumes:
+  airflow_postgres_data:
