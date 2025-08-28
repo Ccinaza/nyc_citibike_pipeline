@@ -123,11 +123,11 @@ terraform apply
 4. **Set Up Airflow with Docker**
 Create a .env file in the project root with the following variables:
 ```bash
-DB_USER=airflow
-DB_PASSWORD=airflow
-DB_NAME=airflow
-AIRFLOW_USERNAME=admin
-AIRFLOW_PASSWORD=admin
+DB_USER=your-database-username
+DB_PASSWORD=your-database-password
+DB_NAME=your-database-name
+AIRFLOW_USERNAME=your-airflow-username
+AIRFLOW_PASSWORD=your-airflow-password
 AIRFLOW_EMAIL=your-email@example.com
 AIRFLOW__WEBSERVER__SECRET_KEY=your-secret-key
 GCP_PROJECT_ID=your-gcp-project-id
